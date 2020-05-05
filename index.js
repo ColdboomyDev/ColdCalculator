@@ -7,10 +7,15 @@ client.once('ready', () =>{
 })
 
 client.on('message', message =>{
-
-	if(message.content.startsWith('!yo')) {
-		message.channel.send("Yo")
+	if(message.member.hasPermisson(['']))
+	{
+		if(message.content.startsWith('!wave')) {
+			let member = message.mentions.members.first();
+			message.channel.send(":wave:" + member.displayName)
+		}
 	}
+
+	
 })
 
 client.login(token);
