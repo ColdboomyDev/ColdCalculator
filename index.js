@@ -1,4 +1,4 @@
-// Fiunancial helper discord bot that works with Gdrive spreadsheet (commands: !spend, !income, !savings, !left)
+// Financial helper discord bot that works with Gdrive spreadsheet (commands: !spend, !income, !savings, !left, !thisMonth)
 const Discord = require('discord.js');
 const{prefix, token} = require('./config.json');
 const client_discord = new Discord.Client();
@@ -35,6 +35,11 @@ client_google.authorize(function(err,tokens){
 						message.channel.send(x);
 					})
 				}
+				if(message.content.startsWith('!thisMonth')){
+					thisMonth(client_google).then(x=>{
+						message.channel.send(x);
+					})
+				}
 				if(message.content.startsWith('!spend')){
 					insert(client_google, message.content).then(x=>{
 						message.channel.send(x);
@@ -57,22 +62,32 @@ client_google.authorize(function(err,tokens){
 async function left(cl){
 	const gsapi = google.sheets({version:'v4', auth: cl});
 	const opt = {
-		spreadsheetId: 'Your spreadsheet id',
-		range :'2020!C5:D6'
+		spreadsheetId: '1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc',
+		range :'2020!B5:D6'
 	};
 	let data = await gsapi.spreadsheets.values.get(opt);
-	return data.data.values[0][0] + ', '+ "You've spend too much!!!"; 
+	return data.data.values[0][0] + ', '+ "Should have more!!!"; 
 }
-// Shows value of "savings field"
+//Showa the value of the amount that left for this moth to spend
+async function thisMonth(cl){
+	const gsapi = google.sheets({version:'v4', auth: cl});
+	const opt = {
+		spreadsheetId: '1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc',
+		range :'2020!B5:D6'
+	};
+	let data = await gsapi.spreadsheets.values.get(opt);
+	return data.data.values[0][1] + ', '+ "You've spend too much!!!"; 
+}
+//Shows the value of savings field
 async function savings(cl){
 	const gsapi = google.sheets({version:'v4', auth: cl});
 	const opt = {
 		spreadsheetId: '1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc',
-		range :'2020!C5:D6'
+		range :'2020!B5:D6'
 
 	};
 	let data = await gsapi.spreadsheets.values.get(opt);
-	return data.data.values[0][1] +', '+ 'Not Much!!! Work harder!!!';
+	return data.data.values[0][2] +', '+ 'Not Much!!! Work harder!!!';
 }
 // Inserts new data depending on the command (spend or income)
 async function insert(cl, s){ 
