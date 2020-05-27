@@ -105,12 +105,22 @@ async function insert(cl, s){
 		return 'Incomplete data!';
 	}
 	if(str[0]=='!spend'){
+		let spendEnd = [];
+		if(str.length >3){
+			for(let i=3; i< str.length; i++){
+				spendEnd.push(str[i]);
+			}
+		}
 	var date = CreateDate();
-	var myString = str.map(x => Array(date,'','',str[1],str[2],str[3]));
+	var myString = str.map(x => Array(date,'','',str[1],str[2],spendEnd.join(' ')));
 	}
 	else if(str[0]=='!income'){
+		let incomeEnd = [];
+		for(let i=2; i< str.length; i++){
+			incomeEnd.push(str[i]);
+		}
 	var date = CreateDate();
-	var myString = str.map(x => Array(date,str[1],str[2],'','',''));
+	var myString = str.map(x => Array(date,str[1],incomeEnd.join(' '),'','',''));
 	}
 	let newData= [myString[0],['','']];	// Created Data that we want insert
 	let data = await gsapi.spreadsheets.values.get(opt);
