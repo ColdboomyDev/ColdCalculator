@@ -1,4 +1,3 @@
-// Financial helper discord bot that works with Gdrive spreadsheet (commands: !spend, !income, !savings, !left, !thisMonth)
 const Discord = require('discord.js');
 const{prefix, token} = require('./config.json');
 const client_discord = new Discord.Client();
@@ -58,52 +57,52 @@ client_google.authorize(function(err,tokens){
 	}
 
 });
-// Shows the value of "left" field
 async function left(cl){
 	const gsapi = google.sheets({version:'v4', auth: cl});
 	const opt = {
-		spreadsheetId: '1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc',
+		spreadsheetId: 'spreadsheetId', // SpreadsheetId from URL
 		range :'2020!B5:D6'
 	};
 	let data = await gsapi.spreadsheets.values.get(opt);
 	return data.data.values[0][0] + ', '+ "Should have more!!!"; 
 }
-//Showa the value of the amount that left for this moth to spend
+
 async function thisMonth(cl){
 	const gsapi = google.sheets({version:'v4', auth: cl});
 	const opt = {
-		spreadsheetId: '1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc',
+		spreadsheetId: 'spreadsheetId', // SpreadsheetId from URL
 		range :'2020!B5:D6'
 	};
 	let data = await gsapi.spreadsheets.values.get(opt);
 	return data.data.values[0][1] + ', '+ "You've spend too much!!!"; 
 }
-//Shows the value of savings field
+
 async function savings(cl){
 	const gsapi = google.sheets({version:'v4', auth: cl});
 	const opt = {
-		spreadsheetId: '1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc',
+		spreadsheetId: ''spreadsheetId', // SpreadsheetId from URL
 		range :'2020!B5:D6'
 
 	};
 	let data = await gsapi.spreadsheets.values.get(opt);
 	return data.data.values[0][2] +', '+ 'Not Much!!! Work harder!!!';
 }
-// Inserts new data depending on the command (spend or income)
-async function insert(cl, s){ 
+
+async function insert(cl, s){
 	const gsapi = google.sheets({version:'v4', auth: cl});
 	const opt = {
-		spreadsheetId: 'Your spreadsheet id',
+		spreadsheetId: 'spreadsheetId', // SpreadsheetId from URL
 		range :'2020!B8:B1000'
 	};
 	const range = {
-		spreadsheetId: 'Your spreadsheet id',
+		spreadsheetId: '1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc',
 		range :'2020!B280:C290'
 	}
 	let str = s.split(" ");
 	if(str.length < 3){
 		return 'Incomplete data!';
 	}
+	
 	if(str[0]=='!spend'){
 		let spendEnd = [];
 		if(str.length >3){
@@ -119,31 +118,30 @@ async function insert(cl, s){
 		for(let i=2; i< str.length; i++){
 			incomeEnd.push(str[i]);
 		}
-	var date = CreateDate();
-	var myString = str.map(x => Array(date,str[1],incomeEnd.join(' '),'','',''));
+		var date = CreateDate();
+		var myString = str.map(x => Array(date,str[1],incomeEnd.join(' '),'','',''));
 	}
-	let newData= [myString[0],['','']];	// Created Data that we want insert
+	let newData= [myString[0],['','']];	
 	let data = await gsapi.spreadsheets.values.get(opt);
-	let lastIndex = data.data.values.length-1 + 8;   // Finding index of the last row
-	let rangeString= '2020!B'+(lastIndex+1).toString(); // Range of the first empty string
+	let lastIndex = data.data.values.length-1 + 9;
+	let rangeString= '2020!B'+lastIndex.toString();
 	const updateoptions = {
-		spreadsheetId: 'Your spreadsheet Id',
+		spreadsheetId: 'spreadsheetId', // SpreadsheetId from URL
 		range: rangeString,
 		valueInputOption: 'USER_ENTERED',
 		resource: {values: newData}
 	};
 
-	let newSpend = await gsapi.spreadsheets.values.update(updateoptions); 
-	// Updates cells (in the range) formatting with some atributes that are listed below 
+	let newSpend = await gsapi.spreadsheets.values.update(updateoptions);
 	if(str[0]=='!spend'){
 		const res = await gsapi.spreadsheets.batchUpdate({
-			spreadsheetId: "1eFVrESxB-CnMNaFSeXqkvF3b7zFsHt5F-uLffzqUewc",
+			spreadsheetId: 'spreadsheetId', // SpreadsheetId from URL
 			requestBody: {
 				"requests": [
 					{
 					  "repeatCell": {
 						"range": {
-						  "sheetId": Sheet_Id,
+						  "sheetId": 84523856,
 						  "startRowIndex": lastIndex-1,
 						  "endRowIndex": lastIndex,
 						  "startColumnIndex": 4,
@@ -192,7 +190,7 @@ async function insert(cl, s){
 	return 'Done!';
 
 }
-// Creates toda date in dd.mm.yyyy format
+
  function CreateDate() {
 	var todayTime = new Date();
 	var month = todayTime .getMonth() + 1;
@@ -208,5 +206,3 @@ async function insert(cl, s){
 	var year = todayTime .getFullYear();
 	return date = day.toString() + "." + month.toString() + "." + year.toString();
 }
-
-
