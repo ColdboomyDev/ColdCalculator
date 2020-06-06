@@ -1,7 +1,32 @@
 # ColdCalcualtor
-Repository with code of Calculator Discord bot
-I'm trying to make a Discord bot that will help me to calculate financials and write them down to a standartised file.
+This is a simple Discord bot (Financial helper in my case) that connects to Google Sheets API, reads and writews some data. 
 
-There are commands (!savings, !left, !thisMonth) that returns specific values from sheet, and commands (!income, !spend) that writes down some values.
+## How to run the bot
+1. Make a Folder and download Node.js
+2. Download Discord.js and make a discord bot using guide https://discordjs.guide/#before-you-begin
+3. Download Google API and make a Google Sheets API setup for Node.js using https://developers.google.com/sheets/api/quickstart/nodejs
+4. When you've got files token.json, credentials.json, client_secret.json, config.json in your folder, download file index.js from repository.
+5. Change SpreadsheetId and other unique information.
+6. Change the range, cells or command to your personal requirements.
 
-To compile this code you need to run proper standartised tutorial setup for discord client and Google_Sheets API and to have files (client_secret, credentials, token, config) in your repository. Also you need to change spreadsheetIds and sheetIds to yours. Don't forget to share permisions to edit spreadsheet with email in client_secret file. 
+## Commands
+- spend 
+  command writes data  in spend cells, so the amount of money will decrease
+- income
+  command writes data in income cells, so the amount of money will increase
+- savings
+  command reads data from savings cell
+- left
+  command reads data from "left for this month" cell
+  
+ ## How to use bot
+ 1. Type a command with prefix "!".
+ 2. Add an amount of money after a whitespace.
+ 3. Add a purpose of money spendeture or the source of income in case of "income" command.
+ 4. Add an organisation which you've transfered money or spend on.
+ 5. Every other symbol reguarding whitespace will be automaticly added to the "organisation" field.
+ 
+ ## Dependencies
+ - Node.js
+ - Discord.js
+ - Google sheets API
