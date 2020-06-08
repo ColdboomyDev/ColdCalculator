@@ -1,5 +1,5 @@
 # ColdCalcualtor
-This is a simple Discord bot (Financial helper in my case) that connects to Google Sheets API, reads and writews some data. 
+This is a simple Discord bot (Financial helper in my case) that connects to Google Sheets API, reads and writes some data. 
 
 ## How to run the bot
 1. Make a Folder and download Node.js
