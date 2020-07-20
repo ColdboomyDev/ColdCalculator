@@ -3,8 +3,8 @@ This is a simple Discord bot (Financial helper in my case) that connects to Goog
 
 ## How to run the bot
 1. Make a Folder and download Node.js
-2. Download Discord.js and make a discord bot using guide https://discordjs.guide/#before-you-begin
-3. Download Google API and make a Google Sheets API setup for Node.js using https://developers.google.com/sheets/api/quickstart/nodejs
+2. Download Discord.js and go through a discord bot using guide https://discordjs.guide/#before-you-begin
+3. Download Google API and go through a Google Sheets API setup for Node.js using https://developers.google.com/sheets/api/quickstart/nodejs
 4. When you've got files token.json, credentials.json, client_secret.json, config.json in your folder, download file index.js from repository.
 5. Change SpreadsheetId and other unique information.
 6. Change the range, cells or command to your personal requirements.
