@@ -16,7 +16,7 @@ This is a simple Discord bot (Financial helper in my case) that connects to Goog
   command writes data in income cells, so the amount of money will increase
 - savings
   command reads data from savings cell
-- left
+- left to spend
   command reads data from "left for this month" cell
   
  ## How to use bot
